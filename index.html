@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パーソナルニュースまとめ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        .update-info {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .news-list {
+            list-style: none;
+        }
+
+        .news-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .news-item:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .news-date {
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        .news-tag {
+            background-color: #3498db;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .news-tag.tech {
+            background-color: #3498db;
+        }
+
+        .news-tag.business {
+            background-color: #2ecc71;
+        }
+
+        .news-tag.sports {
+            background-color: #e74c3c;
+        }
+
+        .news-description {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .news-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        .feedback-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .feedback-btn {
+            background-color: #fff;
+            border: 2px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feedback-btn:hover {
+            border-color: #bbb;
+        }
+
+        .feedback-btn.like {
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .feedback-btn.like:hover {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .feedback-btn.dislike {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .feedback-btn.dislike:hover {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .feedback-btn.active.like {
+            background-color: #2ecc71;
+            color: #fff;
+            border-color: #2ecc71;
+        }
+
+        .feedback-btn.active.dislike {
+            background-color: #e74c3c;
+            color: #fff;
+            border-color: #e74c3c;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📰 My Personal News</h1>
+            <div class="update-info">最終更新: <span id="lastUpdate">2025年10月22日 09:00</span></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <ul class="news-list" id="newsList">
+            <!-- サンプルニュース1 -->
+            <li class="news-item">
+                <div class="news-header">
+                    <h2 class="news-title">AI技術の最新動向：大規模言語モデルの進化が加速</h2>
+                </div>
+                <div class="news-meta">
+                    <span class="news-date">2025年10月22日 08:30</span>
+                    <span class="news-tag tech">テクノロジー</span>
+                </div>
+                <p class="news-description">
+                    最新の研究により、大規模言語モデルの性能が飛躍的に向上していることが明らかになった。特に推論能力と多言語対応において顕著な進歩が見られ、今後のビジネス活用が期待されている。
+                </p>
+                <div class="news-footer">
+                    <a href="#" class="news-link">記事を読む →</a>
+                    <div class="feedback-buttons">
+                        <button class="feedback-btn like" onclick="handleFeedback(this, 'like')">👍 いいね</button>
+                        <button class="feedback-btn dislike" onclick="handleFeedback(this, 'dislike')">👎 興味なし</button>
+                    </div>
+                </div>
+            </li>
+
+            <!-- サンプルニュース2 -->
+            <li class="news-item">
+                <div class="news-header">
+                    <h2 class="news-title">スタートアップ企業への投資が過去最高を記録</h2>
+                </div>
+                <div class="news-meta">
+                    <span class="news-date">2025年10月22日 07:45</span>
+                    <span class="news-tag business">ビジネス</span>
+                </div>
+                <p class="news-description">
+                    2025年第3四半期のスタートアップ投資額が前年比150%増となり、過去最高を記録した。特にAI、クリーンテック、ヘルスケア分野への投資が活発化している。
+                </p>
+                <div class="news-footer">
+                    <a href="#" class="news-link">記事を読む →</a>
+                    <div class="feedback-buttons">
+                        <button class="feedback-btn like" onclick="handleFeedback(this, 'like')">👍 いいね</button>
+                        <button class="feedback-btn dislike" onclick="handleFeedback(this, 'dislike')">👎 興味なし</button>
+                    </div>
+                </div>
+            </li>
+
+            <!-- サンプルニュース3 -->
+            <li class="news-item">
+                <div class="news-header">
+                    <h2 class="news-title">東京オリンピック金メダリストが引退を表明</h2>
+                </div>
+                <div class="news-meta">
+                    <span class="news-date">2025年10月21日 18:20</span>
+                    <span class="news-tag sports">スポーツ</span>
+                </div>
+                <p class="news-description">
+                    東京オリンピックで金メダルを獲得した選手が、現役引退を正式に発表した。長年にわたる活躍と功績を称える声が各方面から寄せられている。
+                </p>
+                <div class="news-footer">
+                    <a href="#" class="news-link">記事を読む →</a>
+                    <div class="feedback-buttons">
+                        <button class="feedback-btn like" onclick="handleFeedback(this, 'like')">👍 いいね</button>
+                        <button class="feedback-btn dislike" onclick="handleFeedback(this, 'dislike')">👎 興味なし</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+
+    <script>
+        function handleFeedback(button, type) {
+            const buttons = button.parentElement.querySelectorAll('.feedback-btn');
+            
+            // 同じボタンをもう一度押した場合は解除
+            if (button.classList.contains('active')) {
+                button.classList.remove('active');
+                console.log('フィードバック解除:', type);
+                return;
+            }
+            
+            // すべてのボタンの active を解除
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // 押されたボタンに active を追加
+            button.classList.add('active');
+            
+            // ここで将来的にデータを保存する処理を追加できます
+            console.log('フィードバック記録:', type);
+            
+            // 簡易的なフィードバック表示
+            const message = type === 'like' ? '👍 いいねしました！' : '👎 興味なしにしました';
+            showToast(message);
+        }
+
+        function showToast(message) {
+            // 既存のトーストがあれば削除
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background-color: #2c3e50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // アニメーション用のスタイルを追加
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
